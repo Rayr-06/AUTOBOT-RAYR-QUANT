@@ -1,0 +1,17 @@
+﻿{
+    "avg_win_loss_ratio":  0,
+    "max_drawdown_pct":  0,
+    "verdict":  {
+                    "status":  "INITIALIZING",
+                    "message":  "⏳ Bot hasn\u0027t run yet. Triggering first run now...",
+                    "action":  "Wait for first scan to complete"
+                },
+    "total_trades":  0,
+    "trades_per_week":  0,
+    "days_running":  0,
+    "last_updated":  "2026-04-30T04:29:49.5006928+05:30",
+    "total_return_pct":  0,
+    "sharpe_ratio":  0,
+    "win_rate":  0,
+    "profit_factor":  0
+}
