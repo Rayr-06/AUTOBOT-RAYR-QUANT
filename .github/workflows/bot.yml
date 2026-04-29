@@ -2,16 +2,21 @@
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Run every hour
-  workflow_dispatch:  # Allow manual trigger
+    - cron: '0 * * * *'  # Every hour
+  workflow_dispatch:  # Manual trigger
+
+permissions:
+  contents: write  # Allow bot to push data
 
 jobs:
-  trade:
+  run-bot:
     runs-on: ubuntu-latest
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -21,19 +26,21 @@ jobs:
       
       - name: Install dependencies
         run: |
-          pip install --quiet \
-            pandas numpy scipy \
-            yfinance vectorbt \
-            requests aiohttp
+          pip install --upgrade pip
+          pip install -r requirements.txt
       
       - name: Run trading bot
-        run: |
-          python cloud_bot.py
+        run: python cloud_bot.py
       
-      - name: Commit and push data
+      - name: Commit results
         run: |
           git config --local user.email "bot@rayrquant.com"
           git config --local user.name "RAYR Bot"
           git add data/
-          git diff --quiet && git diff --staged --quiet || \
-            (git commit -m "Bot run: $(date +'%Y-%m-%d %H:%M UTC')" && git push)
+          git diff --staged --quiet || git commit -m "Bot run: $(date -u +'%Y-%m-%d %H:%M') UTC"
+      
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
