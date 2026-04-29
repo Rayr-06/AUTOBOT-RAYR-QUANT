@@ -1,16 +1,27 @@
-﻿{
-  "timestamp": "2026-04-30T03:24:15.2677523+05:30",
+{
+  "timestamp": "2026-04-29T22:16:05.136508",
   "bot": {
     "running": true,
-    "last_run": "2026-04-30T03:24:15.2677523+05:30"
+    "last_run": "2026-04-29T22:16:05.136513"
   },
   "account": {
-    "equity": 10000.00,
-    "cash": 10000.00,
-    "positions_value": 0.00,
-    "pnl": 0.00,
-    "pnl_pct": 0.00
+    "equity": 10000,
+    "cash": 10000,
+    "positions_value": 0,
+    "pnl": 0,
+    "pnl_pct": 0.0
   },
   "positions": [],
-  "scores": {}
+  "scores": {
+    "BTC-USD": {
+      "score": 35.0,
+      "signal": "WAIT",
+      "price": 75916.44093411988
+    },
+    "ETH-USD": {
+      "score": 25.25,
+      "signal": "WAIT",
+      "price": 2253.4964737499154
+    }
+  }
 }
