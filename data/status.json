@@ -1,20 +1,107 @@
-﻿{
-    "account":  {
-                    "pnl":  0,
-                    "positions_value":  0,
-                    "cash":  10000,
-                    "equity":  10000,
-                    "pnl_pct":  0
-                },
-    "timestamp":  "2026-04-30T04:29:49.3516768+05:30",
-    "bot":  {
-                "last_run":  null,
-                "running":  false
-            },
-    "scores":  {
-
-               },
-    "positions":  [
-
-                  ]
+{
+  "timestamp": "2026-04-29T23:02:46.553000",
+  "bot": {
+    "running": true,
+    "last_run": "2026-04-29T23:02:46.553004"
+  },
+  "account": {
+    "equity": 10000,
+    "cash": 10000,
+    "positions_value": 0,
+    "pnl": 0,
+    "pnl_pct": 0.0
+  },
+  "positions": [],
+  "scores": {
+    "RELIANCE.NS": {
+      "score": 24.0,
+      "price": 83.90592919250996,
+      "signal": "WAIT",
+      "regime": "TRENDING"
+    },
+    "TCS.NS": {
+      "score": 24.0,
+      "price": 83.90592919250996,
+      "signal": "WAIT",
+      "regime": "TRENDING"
+    },
+    "HDFCBANK.NS": {
+      "score": 24.0,
+      "price": 83.90592919250996,
+      "signal": "WAIT",
+      "regime": "TRENDING"
+    },
+    "INFY.NS": {
+      "score": 24.0,
+      "price": 83.90592919250996,
+      "signal": "WAIT",
+      "regime": "TRENDING"
+    },
+    "ITC.NS": {
+      "score": 24.0,
+      "price": 83.90592919250996,
+      "signal": "WAIT",
+      "regime": "TRENDING"
+    },
+    "AAPL": {
+      "score": 24.0,
+      "price": 83.90592919250996,
+      "signal": "WAIT",
+      "regime": "TRENDING"
+    },
+    "MSFT": {
+      "score": 24.0,
+      "price": 83.90592919250996,
+      "signal": "WAIT",
+      "regime": "TRENDING"
+    },
+    "GOOGL": {
+      "score": 24.0,
+      "price": 83.90592919250996,
+      "signal": "WAIT",
+      "regime": "TRENDING"
+    },
+    "TSLA": {
+      "score": 24.0,
+      "price": 83.90592919250996,
+      "signal": "WAIT",
+      "regime": "TRENDING"
+    },
+    "NVDA": {
+      "score": 24.0,
+      "price": 83.90592919250996,
+      "signal": "WAIT",
+      "regime": "TRENDING"
+    },
+    "BTC-USD": {
+      "score": 38.5,
+      "price": 75928.37,
+      "signal": "WAIT",
+      "regime": "TRENDING"
+    },
+    "ETH-USD": {
+      "score": 38.25,
+      "price": 2257.28,
+      "signal": "WAIT",
+      "regime": "TRENDING"
+    },
+    "SOL-USD": {
+      "score": 24.0,
+      "price": 83.90592919250996,
+      "signal": "WAIT",
+      "regime": "TRENDING"
+    },
+    "^NSEI": {
+      "score": 24.0,
+      "price": 83.90592919250996,
+      "signal": "WAIT",
+      "regime": "TRENDING"
+    },
+    "^GSPC": {
+      "score": 24.0,
+      "price": 83.90592919250996,
+      "signal": "WAIT",
+      "regime": "TRENDING"
+    }
+  }
 }
