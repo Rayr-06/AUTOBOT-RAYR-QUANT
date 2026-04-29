@@ -1,0 +1,616 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="AUTOBOT RAYR QUANT - Real-time trading bot dashboard">
+    <title>AUTOBOT RAYR QUANT</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            animation: slideUp 0.4s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 24px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+        
+        .header-subtitle {
+            opacity: 0.9;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.25);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #4ade80;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 10px rgba(74, 222, 128, 0.6);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.6;
+                transform: scale(1.1);
+            }
+        }
+        
+        .equity-display {
+            text-align: center;
+            padding: 32px 0;
+        }
+        
+        .equity-amount {
+            font-size: 56px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            letter-spacing: -2px;
+        }
+        
+        .equity-label {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        
+        .pnl {
+            font-size: 24px;
+            font-weight: 700;
+            padding: 12px 24px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        
+        .pnl.positive {
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        .pnl.negative {
+            color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+        
+        .pnl.neutral {
+            color: #64748b;
+            background: rgba(100, 116, 139, 0.1);
+        }
+        
+        .score-item {
+            margin-bottom: 24px;
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 12px;
+            transition: transform 0.2s;
+        }
+        
+        .score-item:hover {
+            transform: translateY(-2px);
+        }
+        
+        .score-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+        
+        .score-symbol {
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 18px;
+        }
+        
+        .score-value {
+            font-weight: 800;
+            font-size: 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .score-bar-bg {
+            background: #e2e8f0;
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        
+        .score-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 5px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+        }
+        
+        .score-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 8px;
+        }
+        
+        .score-signal {
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+        
+        .signal-buy {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+        }
+        
+        .signal-wait {
+            background: rgba(251, 191, 36, 0.15);
+            color: #f59e0b;
+        }
+        
+        .signal-hold {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #1e293b;
+        }
+        
+        .badge {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .trade-item {
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border-left: 4px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+        
+        .trade-item:hover {
+            transform: translateX(4px);
+            border-left-color: #667eea;
+        }
+        
+        .trade-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            align-items: center;
+        }
+        
+        .trade-side-buy {
+            color: #10b981;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        
+        .trade-side-sell {
+            color: #ef4444;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        
+        .trade-details {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: #94a3b8;
+        }
+        
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        
+        .connection-banner {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 4px 16px rgba(251, 191, 36, 0.3);
+        }
+        
+        .connection-help {
+            margin-top: 8px;
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        
+        .footer {
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            margin-top: 32px;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-screen {
+            text-align: center;
+            padding: 80px 24px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        
+        // Try multiple API endpoints
+        const API_ENDPOINTS = [
+            'http://localhost:8000',
+            window.location.origin.includes('github.io') ? '' : 'http://192.168.1.100:8000'
+        ];
+        
+        function Dashboard() {
+            const [data, setData] = useState(null);
+            const [loading, setLoading] = useState(true);
+            const [error, setError] = useState(null);
+            const [lastUpdate, setLastUpdate] = useState(null);
+            const [apiUrl, setApiUrl] = useState(null);
+            
+            const fetchData = async () => {
+                // Try each endpoint
+                for (const endpoint of API_ENDPOINTS) {
+                    if (!endpoint) continue;
+                    
+                    try {
+                        const [statusRes, positionsRes, tradesRes] = await Promise.all([
+                            fetch(`${endpoint}/api/status`),
+                            fetch(`${endpoint}/api/positions`),
+                            fetch(`${endpoint}/api/trades`)
+                        ]);
+                        
+                        if (statusRes.ok) {
+                            const status = await statusRes.json();
+                            const positions = await positionsRes.json();
+                            const trades = await tradesRes.json();
+                            
+                            setData({ status, positions, trades });
+                            setLastUpdate(new Date());
+                            setLoading(false);
+                            setError(null);
+                            setApiUrl(endpoint);
+                            return; // Success!
+                        }
+                    } catch (e) {
+                        // Try next endpoint
+                        continue;
+                    }
+                }
+                
+                // All endpoints failed
+                setError('Cannot connect to bot. Make sure START_ALL.bat is running on your computer.');
+                setLoading(false);
+            };
+            
+            useEffect(() => {
+                fetchData();
+                const interval = setInterval(fetchData, 30000); // 30 seconds
+                return () => clearInterval(interval);
+            }, []);
+            
+            if (loading) {
+                return (
+                    <div className="container">
+                        <div className="loading-screen">
+                            <div className="spinner"></div>
+                            <h2>Connecting to AUTOBOT RAYR QUANT...</h2>
+                            <p style={{marginTop: '12px', opacity: 0.8}}>Looking for your trading bot</p>
+                        </div>
+                    </div>
+                );
+            }
+            
+            if (error) {
+                return (
+                    <div className="container">
+                        <div className="header">
+                            <h1>🤖 AUTOBOT RAYR QUANT</h1>
+                            <p className="header-subtitle">Real-Time Trading Dashboard</p>
+                        </div>
+                        
+                        <div className="connection-banner">
+                            <div>⚠️ Unable to Connect</div>
+                            <div className="connection-help">
+                                Make sure START_ALL.bat is running on your computer
+                            </div>
+                        </div>
+                        
+                        <div className="card">
+                            <h3 style={{marginBottom: '16px'}}>How to Connect:</h3>
+                            <ol style={{paddingLeft: '20px', lineHeight: '2'}}>
+                                <li>Open your computer</li>
+                                <li>Double-click <strong>START_ALL.bat</strong></li>
+                                <li>Wait 10 seconds</li>
+                                <li>Refresh this page</li>
+                            </ol>
+                        </div>
+                        
+                        <div className="footer">
+                            AUTOBOT RAYR QUANT · 60-Day Validation Mode
+                        </div>
+                    </div>
+                );
+            }
+            
+            const { status, positions, trades } = data;
+            const pnlClass = status.account.pnl > 0 ? 'positive' : status.account.pnl < 0 ? 'negative' : 'neutral';
+            
+            const getSignalClass = (signal) => {
+                if (signal === 'BUY') return 'signal-buy';
+                if (signal === 'WAIT') return 'signal-wait';
+                return 'signal-hold';
+            };
+            
+            return (
+                <div className="container">
+                    <div className="header">
+                        <h1>🤖 AUTOBOT RAYR QUANT</h1>
+                        <p className="header-subtitle">Real-Time Trading Dashboard</p>
+                        <div className="status-badge">
+                            {status.bot.running && <div className="status-dot"></div>}
+                            <span>{status.bot.running ? 'Bot Active' : 'Bot Offline'}</span>
+                            {status.bot.minutes_ago !== undefined && (
+                                <span>· {status.bot.minutes_ago}m ago</span>
+                            )}
+                        </div>
+                    </div>
+                    
+                    <div className="card">
+                        <div className="equity-display">
+                            <div className="equity-amount">
+                                ${status.account.equity.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                            </div>
+                            <div className="equity-label">Total Equity</div>
+                            <div className={`pnl ${pnlClass}`}>
+                                {status.account.pnl >= 0 ? '+' : ''}${Math.abs(status.account.pnl).toFixed(2)} 
+                                ({status.account.pnl_pct >= 0 ? '+' : ''}{status.account.pnl_pct.toFixed(2)}%)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="card">
+                        <div className="section-title">
+                            📊 Confluence Scores
+                        </div>
+                        {Object.entries(status.scores).length === 0 ? (
+                            <div className="empty-state">
+                                <div className="empty-icon">📡</div>
+                                <div>Waiting for first scan...</div>
+                            </div>
+                        ) : (
+                            Object.entries(status.scores).map(([symbol, scoreData]) => (
+                                <div className="score-item" key={symbol}>
+                                    <div className="score-header">
+                                        <span className="score-symbol">{symbol}</span>
+                                        <span className="score-value">{scoreData.score.toFixed(1)}</span>
+                                    </div>
+                                    <div className="score-bar-bg">
+                                        <div 
+                                            className="score-bar-fill" 
+                                            style={{width: `${Math.min((scoreData.score / 100) * 100, 100)}%`}}
+                                        ></div>
+                                    </div>
+                                    <div className="score-details">
+                                        <span>${scoreData.price.toLocaleString()}</span>
+                                        <span className={`score-signal ${getSignalClass(scoreData.signal)}`}>
+                                            {scoreData.signal}
+                                        </span>
+                                    </div>
+                                    {scoreData.score < 72 && (
+                                        <div style={{fontSize: '12px', color: '#94a3b8', marginTop: '8px'}}>
+                                            Need {(72 - scoreData.score).toFixed(1)} more points to trade
+                                        </div>
+                                    )}
+                                </div>
+                            ))
+                        )}
+                    </div>
+                    
+                    <div className="card">
+                        <div className="section-title">
+                            📈 Open Positions
+                            <span className="badge">{positions.count}</span>
+                        </div>
+                        {positions.count === 0 ? (
+                            <div className="empty-state">
+                                <div className="empty-icon">💤</div>
+                                <div>No open positions</div>
+                                <div style={{fontSize: '13px', marginTop: '8px'}}>
+                                    Waiting for score ≥ 72
+                                </div>
+                            </div>
+                        ) : (
+                            positions.positions.map((pos, idx) => (
+                                <div className="trade-item" key={idx}>
+                                    <div className="trade-header">
+                                        <strong style={{fontSize: '16px'}}>{pos.symbol}</strong>
+                                        <span className={pos.unrealized_pnl >= 0 ? 'pnl positive' : 'pnl negative'} style={{fontSize: '16px'}}>
+                                            {pos.unrealized_pnl >= 0 ? '+' : ''}${Math.abs(pos.unrealized_pnl).toFixed(2)} 
+                                            ({pos.unrealized_pnl_pct >= 0 ? '+' : ''}{pos.unrealized_pnl_pct.toFixed(2)}%)
+                                        </span>
+                                    </div>
+                                    <div className="trade-details">
+                                        Qty: {pos.qty.toFixed(6)} · Entry: ${pos.avg_price.toLocaleString()}
+                                        <br/>
+                                        Current: ${pos.current_price.toLocaleString()}
+                                    </div>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                    
+                    <div className="card">
+                        <div className="section-title">
+                            📋 Trade History
+                            <span className="badge">{trades.total}</span>
+                        </div>
+                        {trades.total === 0 ? (
+                            <div className="empty-state">
+                                <div className="empty-icon">⏳</div>
+                                <div>No trades yet</div>
+                                <div style={{fontSize: '13px', marginTop: '8px'}}>
+                                    Bot is scanning for opportunities
+                                </div>
+                            </div>
+                        ) : (
+                            trades.trades.slice().reverse().slice(0, 5).map((trade, idx) => (
+                                <div className="trade-item" key={idx}>
+                                    <div className="trade-header">
+                                        <span className={trade.side === 'buy' ? 'trade-side-buy' : 'trade-side-sell'}>
+                                            {trade.side.toUpperCase()}
+                                        </span>
+                                        <strong>{trade.symbol}</strong>
+                                    </div>
+                                    <div className="trade-details">
+                                        {trade.qty.toFixed(6)} @ ${trade.price.toLocaleString()}
+                                        <br/>
+                                        {new Date(trade.timestamp).toLocaleString()}
+                                    </div>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                    
+                    <div className="footer">
+                        {lastUpdate && (
+                            <div style={{marginBottom: '8px'}}>
+                                Updated: {lastUpdate.toLocaleTimeString()} · Next refresh: {30}s
+                            </div>
+                        )}
+                        <div>
+                            AUTOBOT RAYR QUANT · 60-Day Paper Trading Validation
+                        </div>
+                        {apiUrl && (
+                            <div style={{marginTop: '8px', fontSize: '11px'}}>
+                                Connected to: {apiUrl}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+        
+        ReactDOM.render(<Dashboard />, document.getElementById('root'));
+    </script>
+</body>
+</html>
