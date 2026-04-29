@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-04-29T23:02:46.553000",
+  "timestamp": "2026-04-30T04:36:14.134563",
   "bot": {
     "running": true,
-    "last_run": "2026-04-29T23:02:46.553004"
+    "last_run": "2026-04-30T04:36:14.134563"
   },
   "account": {
     "equity": 10000,
@@ -13,95 +13,15 @@
   },
   "positions": [],
   "scores": {
-    "RELIANCE.NS": {
-      "score": 24.0,
-      "price": 83.90592919250996,
-      "signal": "WAIT",
-      "regime": "TRENDING"
-    },
-    "TCS.NS": {
-      "score": 24.0,
-      "price": 83.90592919250996,
-      "signal": "WAIT",
-      "regime": "TRENDING"
-    },
-    "HDFCBANK.NS": {
-      "score": 24.0,
-      "price": 83.90592919250996,
-      "signal": "WAIT",
-      "regime": "TRENDING"
-    },
-    "INFY.NS": {
-      "score": 24.0,
-      "price": 83.90592919250996,
-      "signal": "WAIT",
-      "regime": "TRENDING"
-    },
-    "ITC.NS": {
-      "score": 24.0,
-      "price": 83.90592919250996,
-      "signal": "WAIT",
-      "regime": "TRENDING"
-    },
-    "AAPL": {
-      "score": 24.0,
-      "price": 83.90592919250996,
-      "signal": "WAIT",
-      "regime": "TRENDING"
-    },
-    "MSFT": {
-      "score": 24.0,
-      "price": 83.90592919250996,
-      "signal": "WAIT",
-      "regime": "TRENDING"
-    },
-    "GOOGL": {
-      "score": 24.0,
-      "price": 83.90592919250996,
-      "signal": "WAIT",
-      "regime": "TRENDING"
-    },
-    "TSLA": {
-      "score": 24.0,
-      "price": 83.90592919250996,
-      "signal": "WAIT",
-      "regime": "TRENDING"
-    },
-    "NVDA": {
-      "score": 24.0,
-      "price": 83.90592919250996,
-      "signal": "WAIT",
-      "regime": "TRENDING"
-    },
     "BTC-USD": {
-      "score": 38.5,
-      "price": 75928.37,
+      "score": 37.75,
       "signal": "WAIT",
-      "regime": "TRENDING"
+      "price": 75853.05519853509
     },
     "ETH-USD": {
-      "score": 38.25,
-      "price": 2257.28,
+      "score": 30.25,
       "signal": "WAIT",
-      "regime": "TRENDING"
-    },
-    "SOL-USD": {
-      "score": 24.0,
-      "price": 83.90592919250996,
-      "signal": "WAIT",
-      "regime": "TRENDING"
-    },
-    "^NSEI": {
-      "score": 24.0,
-      "price": 83.90592919250996,
-      "signal": "WAIT",
-      "regime": "TRENDING"
-    },
-    "^GSPC": {
-      "score": 24.0,
-      "price": 83.90592919250996,
-      "signal": "WAIT",
-      "regime": "TRENDING"
+      "price": 2253.760094931202
     }
   }
 }
