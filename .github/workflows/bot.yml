@@ -1,46 +1,41 @@
-﻿name: Trading Bot
+﻿name: Adaptive Trading Bot
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Every hour
-  workflow_dispatch:  # Manual trigger
+    - cron: '0 */4 * * *'  # Every 4 hours (more conservative)
+  workflow_dispatch:
 
 permissions:
-  contents: write  # Allow bot to push data
+  contents: write
 
 jobs:
-  run-bot:
+  trade:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
           cache: 'pip'
       
       - name: Install dependencies
-        run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
       
-      - name: Run trading bot
-        run: python cloud_bot.py
+      - name: Run adaptive bot
+        run: python master_bot.py
       
       - name: Commit results
         run: |
           git config --local user.email "bot@rayrquant.com"
           git config --local user.name "RAYR Bot"
           git add data/
-          git diff --staged --quiet || git commit -m "Bot run: $(date -u +'%Y-%m-%d %H:%M') UTC"
+          git diff --staged --quiet || git commit -m "Bot: $(date -u +'%Y-%m-%d %H:%M') UTC"
       
-      - name: Push changes
-        uses: ad-m/github-push-action@master
+      - uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: main
