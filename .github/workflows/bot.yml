@@ -1,8 +1,8 @@
-﻿name: Adaptive Trading Bot
+﻿name: Global Multi-Market Bot
 
 on:
   schedule:
-    - cron: '0 */4 * * *'  # Every 4 hours (more conservative)
+    - cron: '0 */6 * * *'  # Every 6 hours
   workflow_dispatch:
 
 permissions:
@@ -22,18 +22,15 @@ jobs:
           python-version: '3.10'
           cache: 'pip'
       
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - run: pip install -r requirements.txt
       
-      - name: Run adaptive bot
-        run: python master_bot.py
+      - run: python global_bot.py
       
-      - name: Commit results
-        run: |
+      - run: |
           git config --local user.email "bot@rayrquant.com"
           git config --local user.name "RAYR Bot"
           git add data/
-          git diff --staged --quiet || git commit -m "Bot: $(date -u +'%Y-%m-%d %H:%M') UTC"
+          git diff --staged --quiet || git commit -m "Global scan: $(date -u +'%Y-%m-%d %H:%M') UTC"
       
       - uses: ad-m/github-push-action@master
         with:
