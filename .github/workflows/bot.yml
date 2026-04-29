@@ -1,4 +1,4 @@
-﻿name: Global Multi-Market Bot
+﻿name: Trading Bot + Analytics
 
 on:
   schedule:
@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  trade:
+  trade-and-analyze:
     runs-on: ubuntu-latest
     
     steps:
@@ -24,13 +24,17 @@ jobs:
       
       - run: pip install -r requirements.txt
       
-      - run: python global_bot.py
+      - name: Run trading bot
+        run: python master_bot.py
+      
+      - name: Calculate analytics
+        run: python calculate_analytics.py
       
       - run: |
           git config --local user.email "bot@rayrquant.com"
           git config --local user.name "RAYR Bot"
           git add data/
-          git diff --staged --quiet || git commit -m "Global scan: $(date -u +'%Y-%m-%d %H:%M') UTC"
+          git diff --staged --quiet || git commit -m "Bot run + analytics: $(date -u +'%Y-%m-%d %H:%M') UTC"
       
       - uses: ad-m/github-push-action@master
         with:

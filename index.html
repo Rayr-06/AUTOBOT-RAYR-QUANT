@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AUTOBOT RAYR QUANT - Live Dashboard</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+    <title>RAYR QUANT - Performance Analytics</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -18,7 +18,7 @@
             padding: 20px;
         }
         
-        .container { max-width: 480px; margin: 0 auto; }
+        .container { max-width: 600px; margin: 0 auto; }
         
         .card {
             background: white;
@@ -26,12 +26,6 @@
             padding: 24px;
             margin-bottom: 16px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-            animation: slideUp 0.4s ease-out;
-        }
-        
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
         
         .header {
@@ -41,132 +35,75 @@
             padding: 40px 24px;
             border-radius: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
         }
         
-        .header h1 { font-size: 28px; margin-bottom: 12px; }
-        .header-subtitle { opacity: 0.9; font-size: 14px; margin-bottom: 16px; }
+        .header h1 { font-size: 32px; margin-bottom: 8px; }
         
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255,255,255,0.25);
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-size: 14px;
-            font-weight: 500;
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
         }
         
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #4ade80;
-            animation: pulse 2s infinite;
+        .metric-box {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
         }
         
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-        }
-        
-        .equity-display { text-align: center; padding: 32px 0; }
-        
-        .equity-amount {
-            font-size: 56px;
+        .metric-value {
+            font-size: 36px;
             font-weight: 800;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             margin-bottom: 8px;
         }
         
-        .equity-label {
+        .metric-value.positive { color: #10b981; }
+        .metric-value.negative { color: #ef4444; }
+        .metric-value.neutral { color: #667eea; }
+        
+        .metric-label {
+            font-size: 13px;
             color: #64748b;
-            font-size: 14px;
-            margin-bottom: 20px;
             text-transform: uppercase;
-            letter-spacing: 1px;
             font-weight: 600;
         }
         
-        .pnl {
-            font-size: 24px;
-            font-weight: 700;
-            padding: 12px 24px;
+        .verdict-box {
+            padding: 24px;
             border-radius: 12px;
-            display: inline-block;
+            margin-bottom: 24px;
         }
         
-        .pnl.positive { color: #10b981; background: rgba(16, 185, 129, 0.1); }
-        .pnl.negative { color: #ef4444; background: rgba(239, 68, 68, 0.1); }
-        .pnl.neutral { color: #64748b; background: rgba(100, 116, 139, 0.1); }
+        .verdict-box.EXCELLENT { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; }
+        .verdict-box.GOOD { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; }
+        .verdict-box.OKAY { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; }
+        .verdict-box.POOR { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; }
+        .verdict-box.INITIALIZING { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white; }
+        
+        .verdict-status { font-size: 28px; font-weight: 800; margin-bottom: 12px; }
+        .verdict-message { font-size: 16px; margin-bottom: 8px; opacity: 0.95; }
+        .verdict-action { font-size: 14px; opacity: 0.85; font-weight: 600; }
         
         .score-item {
-            margin-bottom: 24px;
             padding: 16px;
             background: #f8fafc;
             border-radius: 12px;
+            margin-bottom: 12px;
         }
         
         .score-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 12px;
-        }
-        
-        .score-symbol { font-weight: 700; font-size: 18px; }
-        
-        .score-value {
-            font-weight: 800;
-            font-size: 24px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .score-bar-bg {
-            background: #e2e8f0;
-            height: 10px;
-            border-radius: 5px;
             margin-bottom: 8px;
-        }
-        
-        .score-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            border-radius: 5px;
-            transition: width 0.5s;
-        }
-        
-        .score-details {
-            display: flex;
-            justify-content: space-between;
-            font-size: 13px;
-            color: #64748b;
         }
         
         .section-title {
             font-size: 20px;
             font-weight: 700;
             margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
-        
-        .badge {
-            background: #667eea;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        .empty-state { text-align: center; padding: 48px 24px; color: #94a3b8; }
-        .empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
         
         .footer {
             text-align: center;
@@ -199,17 +136,25 @@
         const { useState, useEffect } = React;
         
         function Dashboard() {
-            const [data, setData] = useState(null);
+            const [status, setStatus] = useState(null);
+            const [analytics, setAnalytics] = useState(null);
             const [loading, setLoading] = useState(true);
             
             const fetchData = async () => {
                 try {
-                    const response = await fetch('data/status.json?' + new Date().getTime());
-                    const status = await response.json();
-                    setData(status);
+                    const [statusRes, analyticsRes] = await Promise.all([
+                        fetch('data/status.json?t=' + new Date().getTime()),
+                        fetch('data/analytics.json?t=' + new Date().getTime())
+                    ]);
+                    
+                    const statusData = await statusRes.json();
+                    const analyticsData = await analyticsRes.json();
+                    
+                    setStatus(statusData);
+                    setAnalytics(analyticsData);
                     setLoading(false);
                 } catch (error) {
-                    console.error('Error:', error);
+                    console.error('Error loading data:', error);
                     setLoading(false);
                 }
             };
@@ -225,98 +170,145 @@
                     <div className="container">
                         <div style={{textAlign: 'center', padding: '80px 24px', color: 'white'}}>
                             <div className="spinner"></div>
-                            <p style={{marginTop: '16px'}}>Loading dashboard...</p>
+                            <p style={{marginTop: '16px'}}>Loading analytics...</p>
                         </div>
                     </div>
                 );
             }
             
-            if (!data) {
+            if (!status || !analytics) {
                 return (
                     <div className="container">
-                        <div className="empty-state" style={{color: 'white'}}>
-                            Bot initializing... Please wait.
+                        <div className="header">
+                            <h1>📊 RAYR QUANT ANALYTICS</h1>
+                        </div>
+                        <div className="card">
+                            <p style={{textAlign: 'center', padding: '32px', color: '#64748b'}}>
+                                Not enough data yet. Run the bot first.
+                            </p>
                         </div>
                     </div>
                 );
             }
             
-            const pnlClass = data.account.pnl > 0 ? 'positive' : data.account.pnl < 0 ? 'negative' : 'neutral';
+            const getMetricColor = (value, isPercentage = true) => {
+                if (isPercentage) {
+                    return value > 0 ? 'positive' : value < 0 ? 'negative' : 'neutral';
+                }
+                return 'neutral';
+            };
             
             return (
                 <div className="container">
                     <div className="header">
-                        <h1>🤖 AUTOBOT RAYR QUANT</h1>
-                        <p className="header-subtitle">Cloud-Hosted Trading Bot</p>
-                        <div className="status-badge">
-                            <div className="status-dot"></div>
-                            <span>Running on GitHub</span>
+                        <h1>📊 RAYR QUANT ANALYTICS</h1>
+                        <p style={{opacity: 0.9, fontSize: '14px', marginTop: '8px'}}>
+                            Performance Tracking Dashboard
+                        </p>
+                    </div>
+                    
+                    <div className={`verdict-box ${analytics.verdict.status}`}>
+                        <div className="verdict-status">{analytics.verdict.status}</div>
+                        <div className="verdict-message">{analytics.verdict.message}</div>
+                        <div className="verdict-action">→ {analytics.verdict.action}</div>
+                    </div>
+                    
+                    <div className="card">
+                        <div className="section-title">📈 Key Metrics</div>
+                        <div className="metric-grid">
+                            <div className="metric-box">
+                                <div className={`metric-value ${getMetricColor(analytics.total_return_pct)}`}>
+                                    {analytics.total_return_pct >= 0 ? '+' : ''}{analytics.total_return_pct.toFixed(2)}%
+                                </div>
+                                <div className="metric-label">Total Return</div>
+                            </div>
+                            
+                            <div className="metric-box">
+                                <div className="metric-value neutral">
+                                    {analytics.win_rate.toFixed(1)}%
+                                </div>
+                                <div className="metric-label">Win Rate</div>
+                            </div>
+                            
+                            <div className="metric-box">
+                                <div className="metric-value neutral">
+                                    {analytics.sharpe_ratio.toFixed(2)}
+                                </div>
+                                <div className="metric-label">Sharpe Ratio</div>
+                            </div>
+                            
+                            <div className="metric-box">
+                                <div className="metric-value negative">
+                                    -{analytics.max_drawdown_pct.toFixed(2)}%
+                                </div>
+                                <div className="metric-label">Max Drawdown</div>
+                            </div>
+                            
+                            <div className="metric-box">
+                                <div className="metric-value neutral">
+                                    {analytics.profit_factor.toFixed(2)}
+                                </div>
+                                <div className="metric-label">Profit Factor</div>
+                            </div>
+                            
+                            <div className="metric-box">
+                                <div className="metric-value neutral">
+                                    {analytics.avg_win_loss_ratio.toFixed(2)}x
+                                </div>
+                                <div className="metric-label">Avg Win/Loss</div>
+                            </div>
                         </div>
                     </div>
                     
                     <div className="card">
-                        <div className="equity-display">
-                            <div className="equity-amount">
-                                ${data.account.equity.toLocaleString('en-US', {minimumFractionDigits: 2})}
+                        <div className="section-title">📊 Trading Activity</div>
+                        <div className="metric-grid">
+                            <div className="metric-box">
+                                <div className="metric-value neutral">{analytics.total_trades}</div>
+                                <div className="metric-label">Total Trades</div>
                             </div>
-                            <div className="equity-label">Total Equity</div>
-                            <div className={`pnl ${pnlClass}`}>
-                                {data.account.pnl >= 0 ? '+' : ''}${Math.abs(data.account.pnl).toFixed(2)} 
-                                ({data.account.pnl_pct >= 0 ? '+' : ''}{data.account.pnl_pct.toFixed(2)}%)
+                            <div className="metric-box">
+                                <div className="metric-value neutral">{analytics.days_running}</div>
+                                <div className="metric-label">Days Running</div>
+                            </div>
+                            <div className="metric-box">
+                                <div className="metric-value neutral">{analytics.trades_per_week.toFixed(1)}</div>
+                                <div className="metric-label">Trades/Week</div>
+                            </div>
+                            <div className="metric-box">
+                                <div className={`metric-value ${getMetricColor(status.account.pnl)}`}>
+                                    ${status.account.equity.toLocaleString('en-US', {minimumFractionDigits: 2})}
+                                </div>
+                                <div className="metric-label">Current Equity</div>
                             </div>
                         </div>
                     </div>
                     
-                    <div className="card">
-                        <div className="section-title">📊 Confluence Scores</div>
-                        {Object.entries(data.scores || {}).map(([symbol, score]) => (
-                            <div className="score-item" key={symbol}>
-                                <div className="score-header">
-                                    <span className="score-symbol">{symbol}</span>
-                                    <span className="score-value">{score.score.toFixed(1)}</span>
-                                </div>
-                                <div className="score-bar-bg">
-                                    <div className="score-bar-fill" style={{width: `${score.score}%`}}></div>
-                                </div>
-                                <div className="score-details">
-                                    <span>${score.price.toLocaleString()}</span>
-                                    <span>{score.signal}</span>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                    
-                    <div className="card">
-                        <div className="section-title">
-                            📈 Open Positions
-                            <span className="badge">{data.positions.length}</span>
-                        </div>
-                        {data.positions.length === 0 ? (
-                            <div className="empty-state">
-                                <div className="empty-icon">💤</div>
-                                <div>No open positions</div>
-                            </div>
-                        ) : (
-                            data.positions.map((pos, idx) => (
-                                <div key={idx} style={{padding: '12px', background: '#f8fafc', borderRadius: '8px', marginBottom: '8px'}}>
-                                    <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '4px'}}>
-                                        <strong>{pos.symbol}</strong>
-                                        <span className={pos.unrealized_pnl >= 0 ? 'pnl positive' : 'pnl negative'}>
-                                            ${pos.unrealized_pnl.toFixed(2)}
-                                        </span>
+                    {status.scores && Object.keys(status.scores).length > 0 && (
+                        <div className="card">
+                            <div className="section-title">🎯 Top Opportunities</div>
+                            {Object.entries(status.scores).slice(0, 5).map(([symbol, data]) => (
+                                <div className="score-item" key={symbol}>
+                                    <div className="score-header">
+                                        <span style={{fontWeight: 700}}>{symbol}</span>
+                                        <span style={{color: '#667eea', fontWeight: 700}}>{data.score.toFixed(1)}</span>
                                     </div>
-                                    <div style={{fontSize: '14px', color: '#64748b'}}>
-                                        {pos.qty.toFixed(6)} @ ${pos.avg_price.toLocaleString()}
+                                    <div style={{fontSize: '13px', color: '#64748b'}}>
+                                        ${data.price.toLocaleString()} · {data.signal}
                                     </div>
                                 </div>
-                            ))
-                        )}
-                    </div>
+                            ))}
+                        </div>
+                    )}
                     
                     <div className="footer">
-                        <div>Last updated: {new Date(data.timestamp).toLocaleString()}</div>
-                        <div style={{marginTop: '8px'}}>
-                            AUTOBOT RAYR QUANT · Runs every hour on GitHub Actions
+                        <div>Last updated: {new Date(analytics.last_updated).toLocaleString()}</div>
+                        <div style={{marginTop: '8px'}}>RAYR QUANT · Auto-refreshes every 60s</div>
+                        <div style={{marginTop: '12px'}}>
+                            <a href="https://github.com/Rayr-06/AUTOBOT-RAYR-QUANT/actions" 
+                               style={{color: 'rgba(255,255,255,0.7)'}}>
+                                View Bot Runs →
+                            </a>
                         </div>
                     </div>
                 </div>
