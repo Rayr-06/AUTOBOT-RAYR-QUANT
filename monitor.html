@@ -1,0 +1,323 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAYR QUANT - Live Monitor</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📡</text></svg>">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0e27;
+            color: #00ff00;
+            padding: 20px;
+            font-size: 13px;
+        }
+        
+        .container { max-width: 1400px; margin: 0 auto; }
+        
+        .header {
+            background: #1a1e3a;
+            border: 2px solid #00ff00;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            color: #00ff00;
+            margin-bottom: 8px;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .panel {
+            background: #1a1e3a;
+            border: 2px solid #00ff00;
+            padding: 16px;
+        }
+        
+        .panel-title {
+            color: #00ff00;
+            font-weight: bold;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #00ff00;
+        }
+        
+        .market-section {
+            margin-bottom: 16px;
+        }
+        
+        .market-name {
+            color: #ffff00;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .symbol-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px dotted #333;
+        }
+        
+        .symbol { color: #00ffff; }
+        .price { color: #ffffff; }
+        .score { color: #ffff00; }
+        .positive { color: #00ff00; }
+        .negative { color: #ff0000; }
+        
+        .strategy-box {
+            background: #0f1329;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-left: 4px solid;
+        }
+        
+        .strategy-box.aggressive { border-color: #ff0000; }
+        .strategy-box.balanced { border-color: #ffff00; }
+        .strategy-box.conservative { border-color: #00ff00; }
+        
+        .activity-log {
+            max-height: 400px;
+            overflow-y: auto;
+            font-size: 11px;
+        }
+        
+        .log-entry {
+            padding: 4px 0;
+            border-bottom: 1px dotted #333;
+        }
+        
+        .timestamp { color: #666; }
+        
+        .blink {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+        
+        .status-bar {
+            background: #1a1e3a;
+            border: 2px solid #00ff00;
+            padding: 12px;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        
+        function Dashboard() {
+            const [monitoring, setMonitoring] = useState(null);
+            const [status, setStatus] = useState(null);
+            const [loading, setLoading] = useState(true);
+            const [lastUpdate, setLastUpdate] = useState(null);
+            
+            const fetchData = async () => {
+                try {
+                    const [monitoringRes, statusRes] = await Promise.all([
+                        fetch('data/monitoring.json?t=' + new Date().getTime()),
+                        fetch('data/status.json?t=' + new Date().getTime())
+                    ]);
+                    
+                    const monitoringData = await monitoringRes.json();
+                    const statusData = await statusRes.json();
+                    
+                    setMonitoring(monitoringData);
+                    setStatus(statusData);
+                    setLastUpdate(new Date());
+                    setLoading(false);
+                } catch (error) {
+                    console.error('Error:', error);
+                    setLoading(false);
+                }
+            };
+            
+            useEffect(() => {
+                fetchData();
+                const interval = setInterval(fetchData, 30000); // 30 seconds
+                return () => clearInterval(interval);
+            }, []);
+            
+            if (loading) {
+                return (
+                    <div className="container">
+                        <div className="header">
+                            <h1>📡 LOADING MONITORING SYSTEM...</h1>
+                        </div>
+                    </div>
+                );
+            }
+            
+            if (!monitoring || !status) {
+                return (
+                    <div className="container">
+                        <div className="header">
+                            <h1>❌ NO DATA AVAILABLE</h1>
+                            <div>Run the bot first to see monitoring data</div>
+                        </div>
+                    </div>
+                );
+            }
+            
+            const totalSymbols = Object.values(monitoring.markets).reduce((sum, market) => sum + market.length, 0);
+            
+            return (
+                <div className="container">
+                    <div className="header">
+                        <h1>📡 RAYR QUANT - LIVE MONITORING SYSTEM</h1>
+                        <div style={{marginTop: '8px', fontSize: '11px'}}>
+                            Scanning {totalSymbols} symbols across {Object.keys(monitoring.markets).length} markets
+                            <span className="blink" style={{marginLeft: '12px'}}>● LIVE</span>
+                        </div>
+                    </div>
+                    
+                    <div className="grid">
+                        {/* LIVE PRICES */}
+                        <div className="panel">
+                            <div className="panel-title">💰 LIVE PRICES</div>
+                            {Object.entries(monitoring.markets).map(([marketName, symbols]) => (
+                                <div key={marketName} className="market-section">
+                                    <div className="market-name">{marketName.replace('_', ' ')}</div>
+                                    {symbols.map((sym, idx) => (
+                                        <div key={idx} className="symbol-row">
+                                            <span className="symbol">{sym.symbol}</span>
+                                            <span className="price">${sym.price.toLocaleString()}</span>
+                                            <span className="score">{sym.score.toFixed(1)}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            ))}
+                        </div>
+                        
+                        {/* STRATEGY BREAKDOWN */}
+                        <div className="panel">
+                            <div className="panel-title">🎯 STRATEGY SIGNALS</div>
+                            
+                            <div className="strategy-box aggressive">
+                                <div style={{color: '#ff0000', fontWeight: 'bold'}}>
+                                    🔴 AGGRESSIVE (Entry ≥65) - {monitoring.strategy_breakdown.AGGRESSIVE.count} signals
+                                </div>
+                                {monitoring.strategy_breakdown.AGGRESSIVE.signals.slice(0, 5).map((sig, idx) => (
+                                    <div key={idx} className="symbol-row" style={{fontSize: '11px'}}>
+                                        <span>{sig.symbol}</span>
+                                        <span>{sig.score.toFixed(1)}</span>
+                                        <span>${sig.price.toLocaleString()}</span>
+                                    </div>
+                                ))}
+                            </div>
+                            
+                            <div className="strategy-box balanced">
+                                <div style={{color: '#ffff00', fontWeight: 'bold'}}>
+                                    🟡 BALANCED (Entry ≥72) - {monitoring.strategy_breakdown.BALANCED.count} signals
+                                </div>
+                                {monitoring.strategy_breakdown.BALANCED.signals.slice(0, 5).map((sig, idx) => (
+                                    <div key={idx} className="symbol-row" style={{fontSize: '11px'}}>
+                                        <span>{sig.symbol}</span>
+                                        <span>{sig.score.toFixed(1)}</span>
+                                        <span>${sig.price.toLocaleString()}</span>
+                                    </div>
+                                ))}
+                            </div>
+                            
+                            <div className="strategy-box conservative">
+                                <div style={{color: '#00ff00', fontWeight: 'bold'}}>
+                                    🟢 CONSERVATIVE (Entry ≥80) - {monitoring.strategy_breakdown.CONSERVATIVE.count} signals
+                                </div>
+                                {monitoring.strategy_breakdown.CONSERVATIVE.signals.slice(0, 5).map((sig, idx) => (
+                                    <div key={idx} className="symbol-row" style={{fontSize: '11px'}}>
+                                        <span>{sig.symbol}</span>
+                                        <span>{sig.score.toFixed(1)}</span>
+                                        <span>${sig.price.toLocaleString()}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        
+                        {/* ACTIVITY LOG */}
+                        <div className="panel">
+                            <div className="panel-title">📋 ACTIVITY LOG (Last {monitoring.activity_log.length} scans)</div>
+                            <div className="activity-log">
+                                {monitoring.activity_log.slice().reverse().map((log, idx) => (
+                                    <div key={idx} className="log-entry">
+                                        <span className="timestamp">{new Date(log.timestamp).toLocaleTimeString()}</span>
+                                        {' | '}
+                                        <span className="symbol">{log.symbol}</span>
+                                        {' | '}
+                                        <span className="price">${log.price.toLocaleString()}</span>
+                                        {' | '}
+                                        Score: <span className="score">{log.score.toFixed(1)}</span>
+                                        {' | '}
+                                        {log.regime}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        
+                        {/* ACCOUNT STATUS */}
+                        <div className="panel">
+                            <div className="panel-title">💼 ACCOUNT STATUS</div>
+                            <div style={{fontSize: '16px', marginBottom: '16px'}}>
+                                <div style={{marginBottom: '8px'}}>
+                                    Equity: <span className="positive">${status.account.equity.toLocaleString('en-US', {minimumFractionDigits: 2})}</span>
+                                </div>
+                                <div style={{marginBottom: '8px'}}>
+                                    P&L: <span className={status.account.pnl >= 0 ? 'positive' : 'negative'}>
+                                        {status.account.pnl >= 0 ? '+' : ''}${status.account.pnl.toFixed(2)} 
+                                        ({status.account.pnl_pct >= 0 ? '+' : ''}{status.account.pnl_pct.toFixed(2)}%)
+                                    </span>
+                                </div>
+                                <div>
+                                    Positions: {status.positions.length}
+                                </div>
+                            </div>
+                            
+                            {status.positions.length > 0 && (
+                                <div>
+                                    <div style={{marginBottom: '8px', fontWeight: 'bold'}}>OPEN POSITIONS:</div>
+                                    {status.positions.map((pos, idx) => (
+                                        <div key={idx} className="symbol-row">
+                                            <span>{pos.symbol}</span>
+                                            <span>{pos.qty.toFixed(6)}</span>
+                                            <span className={pos.unrealized_pnl >= 0 ? 'positive' : 'negative'}>
+                                                ${pos.unrealized_pnl.toFixed(2)}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    
+                    <div className="status-bar">
+                        Last Update: {lastUpdate.toLocaleString()} | Auto-refresh: 30s | 
+                        <span className="blink" style={{marginLeft: '12px', color: '#00ff00'}}>● MONITORING ACTIVE</span>
+                    </div>
+                </div>
+            );
+        }
+        
+        ReactDOM.render(<Dashboard />, document.getElementById('root'));
+    </script>
+</body>
+</html>
