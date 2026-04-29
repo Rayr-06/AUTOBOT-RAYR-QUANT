@@ -1,0 +1,16 @@
+﻿{
+  "timestamp": "2026-04-30T03:24:15.2677523+05:30",
+  "bot": {
+    "running": true,
+    "last_run": "2026-04-30T03:24:15.2677523+05:30"
+  },
+  "account": {
+    "equity": 10000.00,
+    "cash": 10000.00,
+    "positions_value": 0.00,
+    "pnl": 0.00,
+    "pnl_pct": 0.00
+  },
+  "positions": [],
+  "scores": {}
+}

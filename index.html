@@ -2,31 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="AUTOBOT RAYR QUANT - Real-time trading bot dashboard">
-    <title>AUTOBOT RAYR QUANT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUTOBOT RAYR QUANT - Live Dashboard</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
         
-        .container {
-            max-width: 480px;
-            margin: 0 auto;
-        }
+        .container { max-width: 480px; margin: 0 auto; }
         
         .card {
             background: white;
@@ -38,14 +30,8 @@
         }
         
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .header {
@@ -58,24 +44,14 @@
             box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
         }
         
-        .header h1 {
-            font-size: 28px;
-            margin-bottom: 12px;
-            letter-spacing: -0.5px;
-        }
-        
-        .header-subtitle {
-            opacity: 0.9;
-            font-size: 14px;
-            margin-bottom: 16px;
-        }
+        .header h1 { font-size: 28px; margin-bottom: 12px; }
+        .header-subtitle { opacity: 0.9; font-size: 14px; margin-bottom: 16px; }
         
         .status-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             background: rgba(255,255,255,0.25);
-            backdrop-filter: blur(10px);
             padding: 10px 20px;
             border-radius: 25px;
             font-size: 14px;
@@ -88,140 +64,109 @@
             border-radius: 50%;
             background: #4ade80;
             animation: pulse 2s infinite;
-            box-shadow: 0 0 10px rgba(74, 222, 128, 0.6);
         }
         
         @keyframes pulse {
-            0%, 100% { 
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% { 
-                opacity: 0.6;
-                transform: scale(1.1);
-            }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
         
-        .info-box {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 16px rgba(251, 191, 36, 0.3);
-        }
+        .equity-display { text-align: center; padding: 32px 0; }
         
-        .info-title {
-            font-weight: 700;
-            font-size: 18px;
+        .equity-amount {
+            font-size: 56px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 8px;
         }
         
-        .info-text {
-            opacity: 0.95;
+        .equity-label {
+            color: #64748b;
             font-size: 14px;
-            line-height: 1.6;
-        }
-        
-        .setup-steps {
-            background: white;
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-        }
-        
-        .step {
-            display: flex;
-            gap: 16px;
             margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #e2e8f0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
         }
         
-        .step:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
+        .pnl {
+            font-size: 24px;
+            font-weight: 700;
+            padding: 12px 24px;
+            border-radius: 12px;
+            display: inline-block;
         }
         
-        .step-number {
+        .pnl.positive { color: #10b981; background: rgba(16, 185, 129, 0.1); }
+        .pnl.negative { color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+        .pnl.neutral { color: #64748b; background: rgba(100, 116, 139, 0.1); }
+        
+        .score-item {
+            margin-bottom: 24px;
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+        
+        .score-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        
+        .score-symbol { font-weight: 700; font-size: 18px; }
+        
+        .score-value {
+            font-weight: 800;
+            font-size: 24px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .score-bar-bg {
+            background: #e2e8f0;
+            height: 10px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+        }
+        
+        .score-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 5px;
+            transition: width 0.5s;
+        }
+        
+        .score-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #64748b;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            flex-shrink: 0;
+            gap: 10px;
         }
         
-        .step-content h3 {
-            margin-bottom: 8px;
-            color: #1e293b;
-        }
-        
-        .step-content p {
-            color: #64748b;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-        
-        .code-box {
-            background: #1e293b;
-            color: #e2e8f0;
-            padding: 16px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            margin-top: 8px;
-            overflow-x: auto;
-        }
-        
-        .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .badge {
+            background: #667eea;
             color: white;
-            padding: 14px 28px;
+            padding: 4px 12px;
             border-radius: 12px;
-            border: none;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 16px;
-            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
-            transition: transform 0.2s;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-        
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 20px;
-        }
-        
-        .feature {
-            background: #f8fafc;
-            padding: 16px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        
-        .feature-icon {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
-        
-        .feature-text {
-            font-size: 13px;
-            color: #64748b;
+            font-size: 12px;
             font-weight: 600;
         }
+        
+        .empty-state { text-align: center; padding: 48px 24px; color: #94a3b8; }
+        .empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
         
         .footer {
             text-align: center;
@@ -230,114 +175,155 @@
             margin-top: 32px;
             padding: 20px;
         }
+        
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🤖 AUTOBOT RAYR QUANT</h1>
-            <p class="header-subtitle">60-Day Paper Trading Validation System</p>
-            <div class="status-badge">
-                <div class="status-dot"></div>
-                <span>Dashboard Deployed</span>
-            </div>
-        </div>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
         
-        <div class="info-box">
-            <div class="info-title">📡 Connect Your Bot</div>
-            <div class="info-text">
-                This dashboard needs to connect to your bot running on your computer. 
-                Follow the steps below to set up the connection.
-            </div>
-        </div>
-        
-        <div class="setup-steps">
-            <div class="step">
-                <div class="step-number">1</div>
-                <div class="step-content">
-                    <h3>Start Your Bot</h3>
-                    <p>On your computer, navigate to your bot folder and run:</p>
-                    <div class="code-box">START_ALL.bat</div>
-                    <p style="margin-top: 8px; font-size: 12px; color: #94a3b8;">
-                        This starts both the trading bot and the API server
-                    </p>
-                </div>
-            </div>
+        function Dashboard() {
+            const [data, setData] = useState(null);
+            const [loading, setLoading] = useState(true);
             
-            <div class="step">
-                <div class="step-number">2</div>
-                <div class="step-content">
-                    <h3>Get Your Computer's IP</h3>
-                    <p>Open Command Prompt (CMD) and type:</p>
-                    <div class="code-box">ipconfig</div>
-                    <p style="margin-top: 8px;">
-                        Look for "IPv4 Address" (example: 192.168.1.100)
-                    </p>
-                </div>
-            </div>
+            const fetchData = async () => {
+                try {
+                    const response = await fetch('data/status.json?' + new Date().getTime());
+                    const status = await response.json();
+                    setData(status);
+                    setLoading(false);
+                } catch (error) {
+                    console.error('Error:', error);
+                    setLoading(false);
+                }
+            };
             
-            <div class="step">
-                <div class="step-number">3</div>
-                <div class="step-content">
-                    <h3>Access Dashboard</h3>
-                    <p>On your phone or any device, open:</p>
-                    <div class="code-box">http://YOUR_IP:8000</div>
-                    <p style="margin-top: 8px; font-size: 12px; color: #94a3b8;">
-                        Replace YOUR_IP with the IP from step 2<br>
-                        Example: http://192.168.1.100:8000
-                    </p>
+            useEffect(() => {
+                fetchData();
+                const interval = setInterval(fetchData, 60000);
+                return () => clearInterval(interval);
+            }, []);
+            
+            if (loading) {
+                return (
+                    <div className="container">
+                        <div style={{textAlign: 'center', padding: '80px 24px', color: 'white'}}>
+                            <div className="spinner"></div>
+                            <p style={{marginTop: '16px'}}>Loading dashboard...</p>
+                        </div>
+                    </div>
+                );
+            }
+            
+            if (!data) {
+                return (
+                    <div className="container">
+                        <div className="empty-state" style={{color: 'white'}}>
+                            Bot initializing... Please wait.
+                        </div>
+                    </div>
+                );
+            }
+            
+            const pnlClass = data.account.pnl > 0 ? 'positive' : data.account.pnl < 0 ? 'negative' : 'neutral';
+            
+            return (
+                <div className="container">
+                    <div className="header">
+                        <h1>🤖 AUTOBOT RAYR QUANT</h1>
+                        <p className="header-subtitle">Cloud-Hosted Trading Bot</p>
+                        <div className="status-badge">
+                            <div className="status-dot"></div>
+                            <span>Running on GitHub</span>
+                        </div>
+                    </div>
+                    
+                    <div className="card">
+                        <div className="equity-display">
+                            <div className="equity-amount">
+                                ${data.account.equity.toLocaleString('en-US', {minimumFractionDigits: 2})}
+                            </div>
+                            <div className="equity-label">Total Equity</div>
+                            <div className={`pnl ${pnlClass}`}>
+                                {data.account.pnl >= 0 ? '+' : ''}${Math.abs(data.account.pnl).toFixed(2)} 
+                                ({data.account.pnl_pct >= 0 ? '+' : ''}{data.account.pnl_pct.toFixed(2)}%)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="card">
+                        <div className="section-title">📊 Confluence Scores</div>
+                        {Object.entries(data.scores || {}).map(([symbol, score]) => (
+                            <div className="score-item" key={symbol}>
+                                <div className="score-header">
+                                    <span className="score-symbol">{symbol}</span>
+                                    <span className="score-value">{score.score.toFixed(1)}</span>
+                                </div>
+                                <div className="score-bar-bg">
+                                    <div className="score-bar-fill" style={{width: `${score.score}%`}}></div>
+                                </div>
+                                <div className="score-details">
+                                    <span>${score.price.toLocaleString()}</span>
+                                    <span>{score.signal}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    
+                    <div className="card">
+                        <div className="section-title">
+                            📈 Open Positions
+                            <span className="badge">{data.positions.length}</span>
+                        </div>
+                        {data.positions.length === 0 ? (
+                            <div className="empty-state">
+                                <div className="empty-icon">💤</div>
+                                <div>No open positions</div>
+                            </div>
+                        ) : (
+                            data.positions.map((pos, idx) => (
+                                <div key={idx} style={{padding: '12px', background: '#f8fafc', borderRadius: '8px', marginBottom: '8px'}}>
+                                    <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '4px'}}>
+                                        <strong>{pos.symbol}</strong>
+                                        <span className={pos.unrealized_pnl >= 0 ? 'pnl positive' : 'pnl negative'}>
+                                            ${pos.unrealized_pnl.toFixed(2)}
+                                        </span>
+                                    </div>
+                                    <div style={{fontSize: '14px', color: '#64748b'}}>
+                                        {pos.qty.toFixed(6)} @ ${pos.avg_price.toLocaleString()}
+                                    </div>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                    
+                    <div className="footer">
+                        <div>Last updated: {new Date(data.timestamp).toLocaleString()}</div>
+                        <div style={{marginTop: '8px'}}>
+                            AUTOBOT RAYR QUANT · Runs every hour on GitHub Actions
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            );
+        }
         
-        <div class="card">
-            <h3 style="margin-bottom: 16px; color: #1e293b;">✨ Features</h3>
-            <div class="feature-grid">
-                <div class="feature">
-                    <div class="feature-icon">📊</div>
-                    <div class="feature-text">Live Scores</div>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">💰</div>
-                    <div class="feature-text">Real-time P&L</div>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">📈</div>
-                    <div class="feature-text">Positions</div>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">📋</div>
-                    <div class="feature-text">Trade History</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="card">
-            <h3 style="margin-bottom: 12px; color: #1e293b;">📱 Local Dashboard Link</h3>
-            <p style="color: #64748b; font-size: 14px; margin-bottom: 12px;">
-                If your bot is running locally, click below to access the full dashboard:
-            </p>
-            <button class="btn" onclick="window.location.href='http://localhost:8000'">
-                Open Local Dashboard
-            </button>
-            <p style="color: #94a3b8; font-size: 12px; margin-top: 12px; text-align: center;">
-                Only works if START_ALL.bat is running
-            </p>
-        </div>
-        
-        <div class="footer">
-            <div style="margin-bottom: 8px; font-weight: 600;">
-                AUTOBOT RAYR QUANT
-            </div>
-            <div>
-                60-Day Paper Trading · $10,000 Virtual Capital
-            </div>
-            <div style="margin-top: 12px; font-size: 11px;">
-                <a href="https://github.com/Rayr-06/AUTOBOT-RAYR-QUANT" style="color: rgba(255,255,255,0.7);">
-                    View on GitHub
-                </a>
-            </div>
-        </div>
-    </div>
+        ReactDOM.render(<Dashboard />, document.getElementById('root'));
+    </script>
 </body>
 </html>
