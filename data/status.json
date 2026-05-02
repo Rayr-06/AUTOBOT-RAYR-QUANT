@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-05-02T12:45:50.006929",
+  "timestamp": "2026-05-02T18:43:03.488606",
   "bot": {
     "running": true,
-    "last_run": "2026-05-02T12:45:50.006933"
+    "last_run": "2026-05-02T18:43:03.488610"
   },
   "account": {
     "equity": 10000,
@@ -74,14 +74,14 @@
       "regime": "TRENDING"
     },
     "BTC-USD": {
-      "score": 51.75,
-      "price": 78219.94,
-      "signal": "HOLD",
+      "score": 48.75,
+      "price": 78410.98,
+      "signal": "WAIT",
       "regime": "TRENDING"
     },
     "ETH-USD": {
-      "score": 40.75,
-      "price": 2304.36,
+      "score": 48.25,
+      "price": 2309.21,
       "signal": "WAIT",
       "regime": "CHOPPY"
     },
