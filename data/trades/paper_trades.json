@@ -1,0 +1,13 @@
+[
+  {
+    "timestamp": "2026-05-04T19:14:02.208475",
+    "symbol": "BTC-USD",
+    "side": "buy",
+    "qty": 0.046848,
+    "price": 95586.72901643692,
+    "notional": 4478.0470809620365,
+    "commission": 4.478047080962036,
+    "balance_after": 5517.474871957002,
+    "order_type": "market"
+  }
+]
