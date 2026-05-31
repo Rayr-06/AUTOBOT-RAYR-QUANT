@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-05-31T13:13:47.064686",
+  "timestamp": "2026-05-31T19:02:17.402700",
   "bot": {
     "running": true,
-    "last_run": "2026-05-31T13:13:47.064690"
+    "last_run": "2026-05-31T19:02:17.402705"
   },
   "account": {
     "equity": 10000,
@@ -75,19 +75,19 @@
     },
     "BTC-USD": {
       "score": 33.0,
-      "price": 73865.99,
+      "price": 73543.52,
       "signal": "WAIT",
       "regime": "TRENDING"
     },
     "ETH-USD": {
-      "score": 24.0,
-      "price": 2684.9897341603187,
+      "score": 29.0,
+      "price": 1999.49,
       "signal": "WAIT",
       "regime": "TRENDING"
     },
     "SOL-USD": {
-      "score": 25.0,
-      "price": 82.83,
+      "score": 29.0,
+      "price": 81.65,
       "signal": "WAIT",
       "regime": "TRENDING"
     },
