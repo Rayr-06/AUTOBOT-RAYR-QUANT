@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-02T08:41:12.848473",
+  "timestamp": "2026-07-02T13:28:40.864832",
   "markets": {
     "INDIAN_STOCKS": [
       {
@@ -163,82 +163,82 @@
     "RELIANCE.NS": {
       "price": 83.90592919250996,
       "change_pct": 0.0,
-      "timestamp": "2026-07-02T08:41:13.417377"
+      "timestamp": "2026-07-02T13:28:41.389195"
     },
     "TCS.NS": {
       "price": 83.90592919250996,
       "change_pct": 0.0,
-      "timestamp": "2026-07-02T08:41:13.759299"
+      "timestamp": "2026-07-02T13:28:41.738956"
     },
     "HDFCBANK.NS": {
       "price": 83.90592919250996,
       "change_pct": 0.0,
-      "timestamp": "2026-07-02T08:41:14.094877"
+      "timestamp": "2026-07-02T13:28:42.011534"
     },
     "INFY.NS": {
       "price": 83.90592919250996,
       "change_pct": 0.0,
-      "timestamp": "2026-07-02T08:41:14.595095"
+      "timestamp": "2026-07-02T13:28:42.350126"
     },
     "ITC.NS": {
       "price": 83.90592919250996,
       "change_pct": 0.0,
-      "timestamp": "2026-07-02T08:41:14.957327"
+      "timestamp": "2026-07-02T13:28:42.661238"
     },
     "AAPL": {
       "price": 83.90592919250996,
       "change_pct": 0.0,
-      "timestamp": "2026-07-02T08:41:15.205323"
+      "timestamp": "2026-07-02T13:28:42.919524"
     },
     "MSFT": {
       "price": 83.90592919250996,
       "change_pct": 0.0,
-      "timestamp": "2026-07-02T08:41:15.451347"
+      "timestamp": "2026-07-02T13:28:43.145660"
     },
     "GOOGL": {
       "price": 83.90592919250996,
       "change_pct": 0.0,
-      "timestamp": "2026-07-02T08:41:15.730342"
+      "timestamp": "2026-07-02T13:28:43.483403"
     },
     "TSLA": {
       "price": 83.90592919250996,
       "change_pct": 0.0,
-      "timestamp": "2026-07-02T08:41:15.918645"
+      "timestamp": "2026-07-02T13:28:43.758149"
     },
     "NVDA": {
       "price": 83.90592919250996,
       "change_pct": 0.0,
-      "timestamp": "2026-07-02T08:41:16.095515"
+      "timestamp": "2026-07-02T13:28:43.975459"
     },
     "BTC-USD": {
       "price": 79291.10308692191,
       "change_pct": 0.0,
-      "timestamp": "2026-07-02T08:41:16.300456"
+      "timestamp": "2026-07-02T13:28:44.185566"
     },
     "ETH-USD": {
       "price": 2684.9897341603187,
       "change_pct": 0.0,
-      "timestamp": "2026-07-02T08:41:16.518745"
+      "timestamp": "2026-07-02T13:28:44.413485"
     },
     "SOL-USD": {
       "price": 83.90592919250996,
       "change_pct": 0.0,
-      "timestamp": "2026-07-02T08:41:16.771613"
+      "timestamp": "2026-07-02T13:28:44.620251"
     },
     "^NSEI": {
       "price": 83.90592919250996,
       "change_pct": 0.0,
-      "timestamp": "2026-07-02T08:41:16.960519"
+      "timestamp": "2026-07-02T13:28:44.798885"
     },
     "^GSPC": {
       "price": 83.90592919250996,
       "change_pct": 0.0,
-      "timestamp": "2026-07-02T08:41:17.135335"
+      "timestamp": "2026-07-02T13:28:44.994719"
     }
   },
   "activity_log": [
     {
-      "timestamp": "2026-07-02T08:41:13.417382",
+      "timestamp": "2026-07-02T13:28:41.389204",
       "symbol": "RELIANCE.NS",
       "market": "INDIAN_STOCKS",
       "price": 83.90592919250996,
@@ -247,7 +247,7 @@
       "signal": "WAIT"
     },
     {
-      "timestamp": "2026-07-02T08:41:13.759304",
+      "timestamp": "2026-07-02T13:28:41.738964",
       "symbol": "TCS.NS",
       "market": "INDIAN_STOCKS",
       "price": 83.90592919250996,
@@ -256,7 +256,7 @@
       "signal": "WAIT"
     },
     {
-      "timestamp": "2026-07-02T08:41:14.094882",
+      "timestamp": "2026-07-02T13:28:42.011543",
       "symbol": "HDFCBANK.NS",
       "market": "INDIAN_STOCKS",
       "price": 83.90592919250996,
@@ -265,7 +265,7 @@
       "signal": "WAIT"
     },
     {
-      "timestamp": "2026-07-02T08:41:14.595100",
+      "timestamp": "2026-07-02T13:28:42.350135",
       "symbol": "INFY.NS",
       "market": "INDIAN_STOCKS",
       "price": 83.90592919250996,
@@ -274,7 +274,7 @@
       "signal": "WAIT"
     },
     {
-      "timestamp": "2026-07-02T08:41:14.957332",
+      "timestamp": "2026-07-02T13:28:42.661245",
       "symbol": "ITC.NS",
       "market": "INDIAN_STOCKS",
       "price": 83.90592919250996,
@@ -283,7 +283,7 @@
       "signal": "WAIT"
     },
     {
-      "timestamp": "2026-07-02T08:41:15.205328",
+      "timestamp": "2026-07-02T13:28:42.919532",
       "symbol": "AAPL",
       "market": "US_STOCKS",
       "price": 83.90592919250996,
@@ -292,7 +292,7 @@
       "signal": "WAIT"
     },
     {
-      "timestamp": "2026-07-02T08:41:15.451352",
+      "timestamp": "2026-07-02T13:28:43.145670",
       "symbol": "MSFT",
       "market": "US_STOCKS",
       "price": 83.90592919250996,
@@ -301,7 +301,7 @@
       "signal": "WAIT"
     },
     {
-      "timestamp": "2026-07-02T08:41:15.730347",
+      "timestamp": "2026-07-02T13:28:43.483410",
       "symbol": "GOOGL",
       "market": "US_STOCKS",
       "price": 83.90592919250996,
@@ -310,7 +310,7 @@
       "signal": "WAIT"
     },
     {
-      "timestamp": "2026-07-02T08:41:15.918650",
+      "timestamp": "2026-07-02T13:28:43.758155",
       "symbol": "TSLA",
       "market": "US_STOCKS",
       "price": 83.90592919250996,
@@ -319,7 +319,7 @@
       "signal": "WAIT"
     },
     {
-      "timestamp": "2026-07-02T08:41:16.095520",
+      "timestamp": "2026-07-02T13:28:43.975467",
       "symbol": "NVDA",
       "market": "US_STOCKS",
       "price": 83.90592919250996,
@@ -328,7 +328,7 @@
       "signal": "WAIT"
     },
     {
-      "timestamp": "2026-07-02T08:41:16.300462",
+      "timestamp": "2026-07-02T13:28:44.185576",
       "symbol": "BTC-USD",
       "market": "CRYPTO",
       "price": 79291.10308692191,
@@ -337,7 +337,7 @@
       "signal": "WAIT"
     },
     {
-      "timestamp": "2026-07-02T08:41:16.518749",
+      "timestamp": "2026-07-02T13:28:44.413494",
       "symbol": "ETH-USD",
       "market": "CRYPTO",
       "price": 2684.9897341603187,
@@ -346,7 +346,7 @@
       "signal": "WAIT"
     },
     {
-      "timestamp": "2026-07-02T08:41:16.771618",
+      "timestamp": "2026-07-02T13:28:44.620258",
       "symbol": "SOL-USD",
       "market": "CRYPTO",
       "price": 83.90592919250996,
@@ -355,7 +355,7 @@
       "signal": "WAIT"
     },
     {
-      "timestamp": "2026-07-02T08:41:16.960526",
+      "timestamp": "2026-07-02T13:28:44.798893",
       "symbol": "^NSEI",
       "market": "INDICES",
       "price": 83.90592919250996,
@@ -364,7 +364,7 @@
       "signal": "WAIT"
     },
     {
-      "timestamp": "2026-07-02T08:41:17.135341",
+      "timestamp": "2026-07-02T13:28:44.994726",
       "symbol": "^GSPC",
       "market": "INDICES",
       "price": 83.90592919250996,
