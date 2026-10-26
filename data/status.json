@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-10-26T17:52:03.608194",
+  "timestamp": "2026-10-26T22:04:16.283619",
   "bot": {
     "running": true,
-    "last_run": "2026-10-26T17:52:03.608196"
+    "last_run": "2026-10-26T22:04:16.283623"
   },
   "account": {
     "equity": 10000,
@@ -74,10 +74,10 @@
       "regime": "TRENDING"
     },
     "BTC-USD": {
-      "score": 25.25,
-      "price": 80070.42030382664,
+      "score": 24.0,
+      "price": 79291.10308692191,
       "signal": "WAIT",
-      "regime": "CHOPPY"
+      "regime": "TRENDING"
     },
     "ETH-USD": {
       "score": 24.0,
